@@ -3,11 +3,9 @@ import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
-/*
+/**
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
-    
-    @author McKilla Gorilla
 */
 function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);

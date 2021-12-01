@@ -5,10 +5,8 @@ import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
-/*
+/**
     This React component lists all the top5 lists in the UI.
-    
-    @author McKilla Gorilla
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);

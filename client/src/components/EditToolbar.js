@@ -5,11 +5,9 @@ import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import CloseIcon from '@mui/icons-material/HighlightOff';
 
-/*
+/**
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
-    
-    @author McKilla Gorilla
 */
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
