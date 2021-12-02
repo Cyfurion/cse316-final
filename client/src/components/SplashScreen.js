@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 
@@ -11,8 +12,8 @@ export default function SplashScreen() {
                 for the world to see!
             </p>
             <Stack id="splash-menu" spacing={15} direction="row" justifyContent="center">
-                <Button variant="contained" style={{width: '20%'}}>Create Account</Button>
-                <Button variant="contained" style={{width: '20%'}}>Login</Button>
+                <Button href="/register/" variant="contained" style={{width: '20%'}}>Register</Button>
+                <Button href="/login/" variant="contained" style={{width: '20%'}}>Login</Button>
                 <Button variant="contained" style={{width: '20%'}}>Continue as Guest</Button>
             </Stack>
             <b id="credit">Developed by Patrick Fan, CSE316 Final Project</b>
