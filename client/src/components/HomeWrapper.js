@@ -1,13 +1,14 @@
 import { useContext } from 'react'
+
+import AppBanner from './AppBanner'
 import HomeScreen from './HomeScreen'
 import SplashScreen from './SplashScreen'
-import AuthContext from '../auth'
-import AppBanner from './AppBanner'
 import Statusbar from './Statusbar'
+
+import AuthContext from '../auth'
 
 export default function HomeWrapper() {
     const { auth } = useContext(AuthContext);
-    console.log("HomeWrapper auth.loggedIn: " + auth.loggedIn);
     
     if (auth.loggedIn) {
         return (

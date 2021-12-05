@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 /**
@@ -14,7 +13,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
-    const [editActive, setEditActive] = useState(false);
     const { listInfo } = props;
 
     function handleOpenList(id) {
@@ -24,15 +22,9 @@ function ListCard(props) {
         store.setOpenedList(null);
     }
 
-    function handleToggleEdit(event) {
+    function handleLoadList(event, id) {
         event.stopPropagation();
-        toggleEdit();
-    }
-
-    function toggleEdit() {
-        let newActive = !editActive;
-        if (newActive) { store.setIsListNameEditActive(); }
-        setEditActive(newActive);
+        store.setCurrentList(id);
     }
 
     async function handleDeleteList(event, id) {
@@ -54,16 +46,12 @@ function ListCard(props) {
             }}
             button
             onClick={() => { handleOpenList(listInfo._id) }}
+            disableRipple={true}
         >
                 <Box sx={{ padding: 0, flexGrow: 1 }}>
                     <b style={{ fontSize:"20pt" }}>{listInfo.name}</b><br />
                     By: {listInfo.ownerName}<br />
-                    <u style={{color:"red", "fontWeight":"bold"}}>Edit</u>
-                </Box>
-                <Box>
-                    <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon />
-                    </IconButton>
+                    <u style={{color:"red", "fontWeight":"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
                 </Box>
                 <Box>
                     <IconButton onClick={(event) => {
@@ -89,6 +77,7 @@ function ListCard(props) {
                 }}
                 button
                 onClick={() => { handleCloseList() }}
+                disableRipple={true}
             >
                 <Box sx={{ padding: "0", flexGrow: 1 }}>
                     <b style={{ fontSize:"20pt" }}>{listInfo.name}</b><br />
@@ -119,25 +108,6 @@ function ListCard(props) {
             </ListItem>
     }
 
-    // if (editActive) {
-    //     cardElement =
-    //         <TextField
-    //             margin="normal"
-    //             required
-    //             fullWidth
-    //             id={"list-" + listInfo._id}
-    //             label="Top 5 List Name"
-    //             name="name"
-    //             autoComplete="Top 5 List Name"
-    //             className='list-card'
-    //             onKeyPress={handleKeyPress}
-    //             onChange={handleUpdateText}
-    //             defaultValue={listInfo.name}
-    //             inputProps={{style: {fontSize: 48}}}
-    //             InputLabelProps={{style: {fontSize: 24}}}
-    //             autoFocus
-    //         />
-    // }
     return cardElement;
 }
 

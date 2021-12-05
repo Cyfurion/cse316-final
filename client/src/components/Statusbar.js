@@ -8,8 +8,6 @@ import AddIcon from '@mui/icons-material/Add'
 */
 function Statusbar() {
     const { store } = useContext(GlobalStoreContext);
-    let text ="";
-    if (store.currentList) { text = store.currentList.name; }
 
     function handleCreateList() { store.createNewList(); }
 
