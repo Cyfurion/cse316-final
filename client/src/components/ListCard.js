@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import Stack from '@mui/material/Stack';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -15,14 +15,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
-    const [text, setText] = useState("");
-    const { idNamePair } = props;
+    const { listInfo } = props;
 
-    function handleLoadList(event, id) {
-        if (!event.target.disabled) {
-            // CHANGE THE CURRENT LIST
-            store.setCurrentList(id);
-        }
+    function handleOpenList(id) {
+        store.setOpenedList(id);
+    }
+    function handleCloseList() {
+        store.setOpenedList(null);
     }
 
     function handleToggleEdit(event) {
@@ -41,66 +40,104 @@ function ListCard(props) {
         store.markListForDeletion(id);
     }
 
-    function handleKeyPress(event) {
-        if (event.code === "Enter") {
-            let id = event.target.id.substring("list-".length);
-            store.changeListName(id, text);
-            toggleEdit();
-        }
-    }
-    function handleUpdateText(event) {
-        setText(event.target.value);
-    }
-
     let cardElement =
         <ListItem
-            id={idNamePair._id}
-            key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
-            }
-            }
-            style={{
-                fontSize: '48pt',
-                width: '100%'
+            id={listInfo._id}
+            key={listInfo._id}
+            sx={{ 
+                "backgroundColor":"#fffff1",
+                border:"2px solid black", 
+                "border-radius":"10px", 
+                "font-family":"Arial", 
+                margin:"10px 0px",
+                height:"100px"
             }}
+            button
+            onClick={() => { handleOpenList(listInfo._id) }}
         >
-                <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-                <Box sx={{ p: 1 }}>
+                <Box sx={{ padding: 0, flexGrow: 1 }}>
+                    <b style={{ fontSize:"20pt" }}>{listInfo.name}</b><br />
+                    By: {listInfo.ownerName}<br />
+                    <u style={{color:"red", "fontWeight":"bold"}}>Edit</u>
+                </Box>
+                <Box>
                     <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'48pt'}} />
+                        <EditIcon />
                     </IconButton>
                 </Box>
-                <Box sx={{ p: 1 }}>
+                <Box>
                     <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
+                        handleDeleteList(event, listInfo._id)
                     }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'48pt'}} />
+                        <DeleteIcon />
                     </IconButton>
                 </Box>
         </ListItem>
 
-    if (editActive) {
-        cardElement =
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id={"list-" + idNamePair._id}
-                label="Top 5 List Name"
-                name="name"
-                autoComplete="Top 5 List Name"
-                className='list-card'
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
-                autoFocus
-            />
+    if (store.openedList && store.openedList._id === listInfo._id) {
+        cardElement = 
+            <ListItem
+                id={listInfo._id}
+                key={listInfo._id}
+                sx={{ 
+                    "backgroundColor":"#fffff1",
+                    border:"2px solid black", 
+                    "border-radius":"10px", 
+                    "font-family":"Arial", 
+                    margin:"10px 0px",
+                    height:"400px"
+                }}
+                button
+                onClick={() => { handleCloseList() }}
+            >
+                <Box sx={{ padding: "0", flexGrow: 1 }}>
+                    <b style={{ fontSize:"20pt" }}>{listInfo.name}</b><br />
+                    By: {listInfo.ownerName}<br />
+                    <Stack sx={{
+                        color:"#d4af37",
+                        "backgroundColor":"#2c2f70",
+                        "borderRadius":"10px",
+                        "fontSize":"24pt",
+                        "fontWeight":"bold",
+                        width:"50%"
+                    }}>
+                        <ListItem>1. {listInfo.items[0]}</ListItem>
+                        <ListItem>2. {listInfo.items[1]}</ListItem>
+                        <ListItem>3. {listInfo.items[2]}</ListItem>
+                        <ListItem>4. {listInfo.items[3]}</ListItem>
+                        <ListItem>5. {listInfo.items[4]}</ListItem>
+                    </Stack>
+                    <u style={{color:"red", "fontWeight":"bold"}}>Edit</u>
+                </Box>
+                <Box>
+                    <IconButton onClick={(event) => {
+                        handleDeleteList(event, listInfo._id)
+                    }} aria-label='delete'>
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
+            </ListItem>
     }
+
+    // if (editActive) {
+    //     cardElement =
+    //         <TextField
+    //             margin="normal"
+    //             required
+    //             fullWidth
+    //             id={"list-" + listInfo._id}
+    //             label="Top 5 List Name"
+    //             name="name"
+    //             autoComplete="Top 5 List Name"
+    //             className='list-card'
+    //             onKeyPress={handleKeyPress}
+    //             onChange={handleUpdateText}
+    //             defaultValue={listInfo.name}
+    //             inputProps={{style: {fontSize: 48}}}
+    //             InputLabelProps={{style: {fontSize: 24}}}
+    //             autoFocus
+    //         />
+    // }
     return cardElement;
 }
 

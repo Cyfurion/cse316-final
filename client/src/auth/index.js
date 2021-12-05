@@ -108,7 +108,7 @@ function AuthContextProvider(props) {
                 }
             })
             history.push("/");
-            store.loadIdNamePairs();
+            store.loadListData({ ownerEmail: auth.user.email });
         }
     }
 
@@ -120,14 +120,10 @@ function AuthContextProvider(props) {
                 payload: {
                     user: response.data.user
                 }
-            })
+            });
             history.push("/");
-            store.loadIdNamePairs();
         } else {
-            authReducer({
-                type: AuthActionType.ERROR,
-                payload: response.errorMessage
-            })
+            auth.showError(response.errorMessage);
         }
     }
 

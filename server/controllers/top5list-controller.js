@@ -96,42 +96,9 @@ getTop5ListById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5Lists = async (req, res) => {
-    await Top5List.find({}, (err, top5Lists) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!top5Lists.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Top 5 Lists not found` })
-        }
+    await Top5List.find(req.body, (err, top5Lists) => {
+        if (err) { return res.status(400).json({ success: false, error: err }) }
         return res.status(200).json({ success: true, data: top5Lists })
-    }).catch(err => console.log(err))
-}
-getTop5ListPairs = async (req, res) => {
-    await Top5List.find({ ownerEmail: req.query.payload }, (err, top5Lists) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!top5Lists) {
-            console.log("!top5Lists.length");
-            return res
-                .status(404)
-                .json({ success: false, error: 'Top 5 Lists not found' })
-        }
-        else {
-            // PUT ALL THE LISTS INTO ID, NAME PAIRS
-            let pairs = [];
-            for (let key in top5Lists) {
-                let list = top5Lists[key];
-                let pair = {
-                    _id: list._id,
-                    name: list.name
-                };
-                pairs.push(pair);
-            }
-            return res.status(200).json({ success: true, idNamePairs: pairs })
-        }
     }).catch(err => console.log(err))
 }
 
@@ -140,6 +107,5 @@ module.exports = {
     updateTop5List,
     deleteTop5List,
     getTop5Lists,
-    getTop5ListPairs,
     getTop5ListById
 }

@@ -88,7 +88,7 @@ loginUser = async (req, res) => {
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "No account with this email exists."
+                    errorMessage: "Incorrect email or password."
                 });
         }
         const authenticated = await bcrypt.compare(password, existingUser.passwordHash);
@@ -97,7 +97,7 @@ loginUser = async (req, res) => {
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "Incorrect password."
+                    errorMessage: "Incorrect email or password."
                 })
         }
 
