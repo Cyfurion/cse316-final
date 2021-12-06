@@ -82,26 +82,6 @@ body {
   float: right;
 }
 
-.top5-button,
-.top5-button-disabled {
-  font-size: 36pt;
-  border-width: 0px;
-  float: left;
-  color: black;
-  cursor: pointer;
-  opacity: 100%;
-}
-
-.top5-button:hover {
-  cursor: pointer;
-  color: black;
-}
-
-.top5-button-disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-
 #top5-list-selector {
   position: absolute;
   background-color: #c4c4c4;
@@ -167,42 +147,12 @@ body {
   overflow: scroll;
 }
 
-.list-card,
-.selected-list-card,
-.unselected-list-card {
+.list-card {
   font-size: 18pt;
   margin: 10px;
   padding: 20px;
   border: 2px solid black;
   border-radius: 25px;
-}
-
-.list-card:aria-disabled,
-.list-card[aria-disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-  pointer-events: none;
-}
-
-.unselected-list-card:hover {
-  cursor: pointer;
-  background-color: var(--swatch-contrast);
-  color: white;
-}
-
-.selected-list-card {
-  background-color: var(--swatch-accent);
-  color: white;
-}
-
-.unselected-list-card {
-  background-color: var(--swatch-complement);
-}
-
-.list-card-button {
-  float: right;
-  transform: scale(2);
 }
 
 #workspace-edit {
@@ -273,14 +223,6 @@ input {
 .top5-item {
   text-align: left;
   padding-left: 1%;
-}
-
-.disabled {
-  background-color: lightgray;
-}
-
-.disabled:hover {
-  color: var(--swatch-neutral);
 }
 
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */

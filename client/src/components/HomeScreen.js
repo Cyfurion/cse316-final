@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import GlobalStoreContext from '../store';
-import AuthContext from '../auth'
 import DeleteModal from './DeleteModal.js';
 import ListCard from './ListCard.js';
 import Toolbar from './Toolbar.js';
@@ -10,10 +9,9 @@ import List from '@mui/material/List';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-    const { auth } = useContext(AuthContext);
 
     useEffect(() => {
-        store.loadListData({ ownerEmail: auth.user.email });
+        store.loadListData();
     }, []);
 
     let listCard = "";

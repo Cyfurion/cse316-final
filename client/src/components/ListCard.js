@@ -37,12 +37,15 @@ function ListCard(props) {
             id={listInfo._id}
             key={listInfo._id}
             sx={{ 
-                "backgroundColor":"#fffff1",
+                backgroundColor:"#fffff1",
                 border:"2px solid black", 
-                "border-radius":"10px", 
-                "font-family":"Arial", 
+                borderRadius:"10px", 
+                fontFamily:"Arial", 
                 margin:"10px 0px",
-                height:"100px"
+                height:"100px",
+                '&:hover': {
+                    backgroundColor:"#fffff1"
+                }
             }}
             button
             onClick={() => { handleOpenList(listInfo._id) }}
@@ -51,12 +54,10 @@ function ListCard(props) {
                 <Box sx={{ padding: 0, flexGrow: 1 }}>
                     <b style={{ fontSize:"20pt" }}>{listInfo.name}</b><br />
                     By: {listInfo.ownerName}<br />
-                    <u style={{color:"red", "fontWeight":"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
+                    <u style={{color:"red", fontWeight:"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
                 </Box>
                 <Box>
-                    <IconButton onClick={(event) => {
-                        handleDeleteList(event, listInfo._id)
-                    }} aria-label='delete'>
+                    <IconButton onClick={(event) => { handleDeleteList(event, listInfo._id) }} aria-label='delete'>
                         <DeleteIcon />
                     </IconButton>
                 </Box>
@@ -68,15 +69,18 @@ function ListCard(props) {
                 id={listInfo._id}
                 key={listInfo._id}
                 sx={{ 
-                    "backgroundColor":"#fffff1",
+                    backgroundColor:"#fffff1",
                     border:"2px solid black", 
-                    "border-radius":"10px", 
-                    "font-family":"Arial", 
+                    borderRadius:"10px", 
+                    fontFamily:"Arial", 
                     margin:"10px 0px",
-                    height:"400px"
+                    height:"400px",
+                    '&:hover': {
+                        backgroundColor:"#fffff1"
+                    }
                 }}
                 button
-                onClick={() => { handleCloseList() }}
+                onClick={handleCloseList}
                 disableRipple={true}
             >
                 <Box sx={{ padding: "0", flexGrow: 1 }}>
@@ -84,10 +88,10 @@ function ListCard(props) {
                     By: {listInfo.ownerName}<br />
                     <Stack sx={{
                         color:"#d4af37",
-                        "backgroundColor":"#2c2f70",
-                        "borderRadius":"10px",
-                        "fontSize":"24pt",
-                        "fontWeight":"bold",
+                        backgroundColor:"#2c2f70",
+                        borderRadius:"10px",
+                        fontSize:"24pt",
+                        fontWeight:"bold",
                         width:"50%"
                     }}>
                         <ListItem>1. {listInfo.items[0]}</ListItem>
@@ -96,12 +100,10 @@ function ListCard(props) {
                         <ListItem>4. {listInfo.items[3]}</ListItem>
                         <ListItem>5. {listInfo.items[4]}</ListItem>
                     </Stack>
-                    <u style={{color:"red", "fontWeight":"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
+                    <u style={{color:"red", fontWeight:"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
                 </Box>
                 <Box>
-                    <IconButton onClick={(event) => {
-                        handleDeleteList(event, listInfo._id)
-                    }} aria-label='delete'>
+                    <IconButton onClick={(event) => { handleDeleteList(event, listInfo._id) }} aria-label='delete'>
                         <DeleteIcon />
                     </IconButton>
                 </Box>
