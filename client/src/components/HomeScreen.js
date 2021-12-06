@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
-
+    
     useEffect(() => {
         store.loadListData();
     }, []);

@@ -154,6 +154,12 @@ body {
   border: 2px solid black;
   border-radius: 25px;
 }
+.comment-card {
+  display: flex;
+  background-color: #d4af37;
+  border: 2px solid black;
+  border-radius: 10px;
+}
 
 #workspace-edit {
   background-color: #d4d4f5;

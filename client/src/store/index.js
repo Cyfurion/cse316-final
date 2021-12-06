@@ -51,7 +51,7 @@ function GlobalStoreContextProvider(props) {
                 return setStore({
                     listData: payload.listData,
                     currentList: null,
-                    openedList: null,
+                    openedList: store.openedList,
                     newListCounter: store.newListCounter,
                     listMarkedForDeletion: null,
                     view: store.view
@@ -180,7 +180,6 @@ function GlobalStoreContextProvider(props) {
             updateList(top5List);
         }
     }
-    
     store.changeListItems = async function (id, items) {
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
@@ -191,7 +190,59 @@ function GlobalStoreContextProvider(props) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.data.success) {
                     async function getListData() {
-                        response = await api.getTop5Lists({ ownerEmail: auth.user.email });
+                        response = await api.getTop5Lists();
+                        if (response.data.success) {
+                            let dataArray = response.data.data;
+                            storeReducer({
+                                type: GlobalStoreActionType.UPDATE_LIST_DATA,
+                                payload: { listData: dataArray }
+                            });
+                        }
+                    }
+                    getListData();
+                }
+            }
+            updateList(top5List);
+        }
+    }
+    store.publishCurrentList = async function () {
+        let top5List = store.currentList;
+        if (auth.user.email !== top5List.ownerEmail) { return; }
+        top5List.published = true;
+        let today = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+        top5List.publishedDate = monthNames[today.getMonth()] + " " + + today.getDate() + ", " + today.getFullYear();
+        console.log(top5List.publishedDate);
+        async function updateList(top5List) {
+            let response = await api.updateTop5ListById(top5List._id, top5List);
+            if (response.data.success) {
+                async function getListData() {
+                    response = await api.getTop5Lists();
+                    if (response.data.success) {
+                        let dataArray = response.data.data;
+                        storeReducer({
+                            type: GlobalStoreActionType.UPDATE_LIST_DATA,
+                            payload: { listData: dataArray }
+                        });
+                    }
+                }
+                getListData();
+            }
+        }
+        updateList(top5List);
+    }
+    store.comment = async function (user, body) {
+        let response = await api.getTop5ListById(store.openedList._id)
+        if (response.data.success) {
+            let top5List = response.data.top5List;
+            top5List.comments.push({name: user, body: body});
+            async function updateList(top5List) {
+                console.log(top5List);
+                response = await api.updateTop5ListById(top5List._id, top5List);
+                if (response.data.success) {
+                    async function getListData() {
+                        response = await api.getTop5Lists();
                         if (response.data.success) {
                             let dataArray = response.data.data;
                             storeReducer({
@@ -225,6 +276,7 @@ function GlobalStoreContextProvider(props) {
             ownerEmail: auth.user.email,
             ownerName: auth.user.firstName + " " + auth.user.lastName,
             published: false,
+            publishedDate: "unpublished",
             likes: [],
             dislikes: [],
             views: 0,
@@ -257,7 +309,7 @@ function GlobalStoreContextProvider(props) {
                     filter = { published: true }
                     break;
                 case "user":
-                    filter = {}
+                    filter = { published: true }
                     break;
                 case "community":
                     filter = { ownerEmail: "community" }
@@ -343,12 +395,42 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.setView = function (view) {
+    store.setView = async function (view) {
         storeReducer({
             type: GlobalStoreActionType.CHANGE_VIEW,
             payload: view
         });
-        store.loadListData();
+        let filter = {};
+        switch (view) {
+            case "home":
+                filter = { ownerEmail: auth.user.email }
+                break;
+            case "all":
+                filter = { published: true }
+                break;
+            case "user":
+                filter = { published: true }
+                break;
+            case "community":
+                filter = { ownerEmail: "community" }
+                break;
+            default:
+                return;
+        }
+        const response = await api.getTop5Lists(filter);
+        if (response.data.success) {
+            setStore({
+                listData: response.data.data,
+                currentList: null,
+                openedList: null,
+                newListCounter: store.newListCounter,
+                listMarkedForDeletion: null,
+                view: view
+            });
+        } else {
+            console.log("API FAILED TO GET THE LISTS");
+        }
+
     }
 
     return (

@@ -11,17 +11,41 @@ function Statusbar() {
 
     function handleCreateList() { store.createNewList(); }
 
-    return (
-        <div id="top5-statusbar">
-            <IconButton 
-                aria-label="add"
-                onClick={handleCreateList}
-            >
-                <AddIcon fontSize="large"/>
-            </IconButton>
-            <Typography variant="h4">Test</Typography>
-        </div>
-    );
+    switch (store.view) {
+        case "home":
+            return (
+                <div id="top5-statusbar">
+                    <IconButton 
+                        aria-label="add"
+                        onClick={handleCreateList}
+                        disabled={store.currentList ? true : false}
+                    >
+                        <AddIcon fontSize="large"/>
+                    </IconButton>
+                    <Typography variant="h4">Your Lists</Typography>
+                </div>
+            );
+        case "all":
+            return (
+                <div id="top5-statusbar">
+                    <Typography variant="h4">All Lists</Typography>
+                </div>
+            );
+        case "user":
+            return (
+                <div id="top5-statusbar">
+                    <Typography variant="h4">User Lists</Typography>
+                </div>
+            );
+        case "community":
+            return (
+                <div id="top5-statusbar">
+                    <Typography variant="h4">Community Lists</Typography>
+                </div>
+            );
+        default:
+            return;
+    }
 }
 
 export default Statusbar;

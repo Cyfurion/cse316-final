@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Top5Item from './Top5Item.js';
 import { GlobalStoreContext } from '../store/index.js';
 /**
@@ -21,7 +21,8 @@ function WorkspaceScreen() {
         store.closeCurrentList();
     }
     function handlePublish() {
-
+        store.publishCurrentList();
+        store.closeCurrentList();
     }
 
     return (

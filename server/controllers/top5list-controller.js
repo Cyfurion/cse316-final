@@ -34,14 +34,12 @@ createTop5List = (req, res) => {
 
 updateTop5List = async (req, res) => {
     const body = req.body
-    console.log("updateTop5List: " + JSON.stringify(body));
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a body to update',
         })
     }
-
     Top5List.findOne({ _id: req.params.id }, (err, top5List) => {
         console.log("top5List found: " + JSON.stringify(top5List));
         if (err) {
@@ -50,9 +48,14 @@ updateTop5List = async (req, res) => {
                 message: 'Top 5 List not found!',
             })
         }
-
-        top5List.name = body.name
-        top5List.items = body.items
+        top5List.name = body.name;
+        top5List.items = body.items;
+        top5List.published = body.published;
+        top5List.publishedDate = body.publishedDate;
+        top5List.likes = body.likes;
+        top5List.dislikes = body.dislikes;
+        top5List.views = body.views;
+        top5List.comments = body.comments;
         top5List
             .save()
             .then(() => {

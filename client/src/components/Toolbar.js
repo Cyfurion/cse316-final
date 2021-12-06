@@ -14,25 +14,44 @@ function Toolbar() {
 
     return (
         <div id="list-selector-heading">
-            <IconButton aria-label="home" onClick={() => handleChangeView("home")}>
-                <HomeIcon />
-            </IconButton>
-            <IconButton aria-label="all" onClick={() => handleChangeView("all")}>
-                <GroupIcon />
-            </IconButton>
-            <IconButton aria-label="user" onClick={() => handleChangeView("user")}>
-                <PersonIcon />
-            </IconButton>
-            <IconButton aria-label="community" onClick={() => handleChangeView("community")}>
-                <FunctionsIcon />
-            </IconButton>
-            <input type="text" id="search-bar" />
+            <Box sx={{ flexGrow: 1 }}>
+                <IconButton 
+                    aria-label="home" 
+                    onClick={() => handleChangeView("home")}
+                    disabled={store.currentList ? true : false}
+                >
+                    <HomeIcon />
+                </IconButton>
+                <IconButton 
+                    aria-label="all" 
+                    onClick={() => handleChangeView("all")}
+                    disabled={store.currentList ? true : false}
+                >
+                    <GroupIcon />
+                </IconButton>
+                <IconButton 
+                    aria-label="user" 
+                    onClick={() => handleChangeView("user")}
+                    disabled={store.currentList ? true : false}
+                >
+                    <PersonIcon />
+                </IconButton>
+                <IconButton 
+                    aria-label="community" 
+                    onClick={() => handleChangeView("community")}
+                    disabled={store.currentList ? true : false}
+                >
+                    <FunctionsIcon />
+                </IconButton>
+                <input type="text" id="search-bar" disabled={store.currentList ? true : false} />
+            </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton
                     size="large"
                     aria-label="sort by"
                     aria-haspopup="true"
                     sx={{ color: 'black' }}
+                    disabled={store.currentList ? true : false}
                 >
                     <p id="sort-by-text">SORT BY</p>
                     <SortIcon />
