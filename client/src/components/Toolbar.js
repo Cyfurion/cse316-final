@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { GlobalStoreContext } from '../store/index.js';
 import { Box, IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Groups';
@@ -6,18 +8,22 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import SortIcon from '@mui/icons-material/Sort';
 
 function Toolbar() {
+    const { store } = useContext(GlobalStoreContext);
+
+    function handleChangeView(view) { store.setView(view); }
+
     return (
         <div id="list-selector-heading">
-            <IconButton aria-label="home">
+            <IconButton aria-label="home" onClick={() => handleChangeView("home")}>
                 <HomeIcon />
             </IconButton>
-            <IconButton aria-label="all">
+            <IconButton aria-label="all" onClick={() => handleChangeView("all")}>
                 <GroupIcon />
             </IconButton>
-            <IconButton aria-label="user">
+            <IconButton aria-label="user" onClick={() => handleChangeView("user")}>
                 <PersonIcon />
             </IconButton>
-            <IconButton aria-label="community">
+            <IconButton aria-label="community" onClick={() => handleChangeView("community")}>
                 <FunctionsIcon />
             </IconButton>
             <input type="text" id="search-bar" />

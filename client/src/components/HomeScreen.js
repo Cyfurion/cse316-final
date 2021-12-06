@@ -38,9 +38,7 @@ const HomeScreen = () => {
     return (
         <div id="top5-list-selector">
             <Toolbar />
-            <div id="list-selector-list">
-                {listCard}
-            </div>
+            <div id="list-selector-list">{listCard}</div>
             {deleteModal}
         </div>)
 }

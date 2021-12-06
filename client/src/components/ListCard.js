@@ -96,7 +96,7 @@ function ListCard(props) {
                         <ListItem>4. {listInfo.items[3]}</ListItem>
                         <ListItem>5. {listInfo.items[4]}</ListItem>
                     </Stack>
-                    <u style={{color:"red", "fontWeight":"bold"}}>Edit</u>
+                    <u style={{color:"red", "fontWeight":"bold"}} onClick={(event) => handleLoadList(event, listInfo._id)}>Edit</u>
                 </Box>
                 <Box>
                     <IconButton onClick={(event) => {
