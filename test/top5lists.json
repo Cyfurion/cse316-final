@@ -1,0 +1,249 @@
+[{
+  "_id": {
+    "$oid": "61aeddceffd294401cd5c4ad"
+  },
+  "items": [
+    "Zhong Li",
+    "Eula",
+    "Ayaka",
+    "Ei",
+    "Kokomi"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Genshin Impact Characters",
+  "ownerEmail": "patrick.fan@stonybrook.edu",
+  "ownerName": "Cyfurion",
+  "published": true,
+  "publishedDate": "December 6, 2021",
+  "views": 2,
+  "comments": [],
+  "communityPoints": [],
+  "createdAt": {
+    "$date": "2021-12-07T04:06:38.740Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:13:53.807Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61aede17ffd294401cd5c4dd"
+  },
+  "items": [
+    "Zhong Li",
+    "Eula",
+    "Raiden Shogun",
+    "Ayaka",
+    "Ei"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Genshin Impact Characters",
+  "ownerEmail": "community",
+  "ownerName": "Community List",
+  "published": true,
+  "publishedDate": "December 6, 2021",
+  "views": 7,
+  "comments": [
+    {
+      "_id": {
+        "$oid": "61aedf1bffd294401cd5c5cd"
+      },
+      "name": "Cyfurion",
+      "body": "cap"
+    },
+    {
+      "_id": {
+        "$oid": "61aedf0fffd294401cd5c5aa"
+      },
+      "name": "Guardian",
+      "body": "Razor best boi"
+    }
+  ],
+  "communityPoints": [
+    {
+      "_id": {
+        "$oid": "61aede17ffd294401cd5c4de"
+      },
+      "item": "Zhong Li",
+      "points": 9
+    },
+    {
+      "_id": {
+        "$oid": "61aede17ffd294401cd5c4df"
+      },
+      "item": "Eula",
+      "points": 7
+    },
+    {
+      "_id": {
+        "$oid": "61aedee7ffd294401cd5c572"
+      },
+      "item": "Raiden Shogun",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61aede17ffd294401cd5c4e0"
+      },
+      "item": "Ayaka",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61aede17ffd294401cd5c4e1"
+      },
+      "item": "Ei",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61aedee7ffd294401cd5c575"
+      },
+      "item": "Ai",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61aede17ffd294401cd5c4e2"
+      },
+      "item": "Kokomi",
+      "points": 1
+    },
+    {
+      "_id": {
+        "$oid": "61aedee7ffd294401cd5c577"
+      },
+      "item": "Paimon",
+      "points": 1
+    }
+  ],
+  "createdAt": {
+    "$date": "2021-12-07T04:07:51.350Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:12:11.805Z"
+  },
+  "__v": 10
+},{
+  "_id": {
+    "$oid": "61aede78ffd294401cd5c520"
+  },
+  "items": [
+    "Raiden Shogun",
+    "Zhong Li",
+    "Eula",
+    "Ai",
+    "Paimon"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Genshin Impact Characters",
+  "ownerEmail": "test@xd.com",
+  "ownerName": "Guardian",
+  "published": true,
+  "publishedDate": "December 6, 2021",
+  "views": 1,
+  "comments": [],
+  "communityPoints": [],
+  "createdAt": {
+    "$date": "2021-12-07T04:09:28.812Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:11:37.709Z"
+  },
+  "__v": 2
+},{
+  "_id": {
+    "$oid": "61aedf5dffd294401cd5c5dc"
+  },
+  "items": [
+    "B",
+    "C",
+    "D",
+    "A",
+    "F"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Letters",
+  "ownerEmail": "patrick.fan@stonybrook.edu",
+  "ownerName": "Cyfurion",
+  "published": true,
+  "publishedDate": "December 6, 2021",
+  "views": 5,
+  "comments": [],
+  "communityPoints": [],
+  "createdAt": {
+    "$date": "2021-12-07T04:13:17.523Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:13:57.463Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61aedf7effd294401cd5c60a"
+  },
+  "items": [
+    "B",
+    "C",
+    "D",
+    "A",
+    "F"
+  ],
+  "likes": [],
+  "dislikes": [],
+  "name": "Letters",
+  "ownerEmail": "community",
+  "ownerName": "Community List",
+  "published": true,
+  "publishedDate": "December 6, 2021",
+  "views": 0,
+  "comments": [],
+  "communityPoints": [
+    {
+      "_id": {
+        "$oid": "61aedf7effd294401cd5c60b"
+      },
+      "item": "B",
+      "points": 5
+    },
+    {
+      "_id": {
+        "$oid": "61aedf7effd294401cd5c60c"
+      },
+      "item": "C",
+      "points": 4
+    },
+    {
+      "_id": {
+        "$oid": "61aedf7effd294401cd5c60d"
+      },
+      "item": "D",
+      "points": 3
+    },
+    {
+      "_id": {
+        "$oid": "61aedf7effd294401cd5c60e"
+      },
+      "item": "A",
+      "points": 2
+    },
+    {
+      "_id": {
+        "$oid": "61aedf7effd294401cd5c60f"
+      },
+      "item": "F",
+      "points": 1
+    }
+  ],
+  "createdAt": {
+    "$date": "2021-12-07T04:13:50.890Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:13:50.890Z"
+  },
+  "__v": 0
+}]

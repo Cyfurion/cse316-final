@@ -81,19 +81,19 @@ registerUser = async (req, res) => {
 
 loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
+        const { userName, password } = req.body;
+        if (!userName || !password) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
         }
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ userName: userName });
         if (!existingUser) {
             return res
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "Incorrect email or password."
+                    errorMessage: "Incorrect username or password."
                 });
         }
         const authenticated = await bcrypt.compare(password, existingUser.passwordHash);
@@ -102,7 +102,7 @@ loginUser = async (req, res) => {
                 .status(400)
                 .json({
                     success: false,
-                    errorMessage: "Incorrect email or password."
+                    errorMessage: "Incorrect username or password."
                 })
         }
 

@@ -27,7 +27,7 @@ export default function LoginScreen() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         auth.loginUser({
-            email: data.get('email'),
+            userName: data.get('username'),
             password: data.get('password')
         }, store).catch(function (error) {
             auth.showError(error.response.data.errorMessage);
@@ -78,10 +78,10 @@ export default function LoginScreen() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
                                 autoFocus
                             />
                             <TextField

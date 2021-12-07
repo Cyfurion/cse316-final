@@ -1,0 +1,29 @@
+[{
+  "_id": {
+    "$oid": "61aed8a3e07b3a26381609ba"
+  },
+  "userName": "Cyfurion",
+  "email": "patrick.fan@stonybrook.edu",
+  "passwordHash": "$2a$10$bw8OPf72khyZfGneC5sSFeTUFgpLVW80k6RUOkeQyN0hlbZ9lSwbe",
+  "createdAt": {
+    "$date": "2021-12-07T03:44:35.656Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T03:44:35.656Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61aede67ffd294401cd5c511"
+  },
+  "userName": "Guardian",
+  "email": "test@xd.com",
+  "passwordHash": "$2a$10$NthfuchDwOPKTHqmv.4UKubRltfg6TH0jGWojZ9HYqav7ZFARhkou",
+  "createdAt": {
+    "$date": "2021-12-07T04:09:11.552Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-07T04:09:11.552Z"
+  },
+  "__v": 0
+}]
