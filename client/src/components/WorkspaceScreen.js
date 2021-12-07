@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Top5Item from './Top5Item.js';
 import { GlobalStoreContext } from '../store/index.js';
 /**
@@ -21,7 +21,14 @@ function WorkspaceScreen() {
         store.closeCurrentList();
     }
     function handlePublish() {
-        store.publishCurrentList();
+        if (new Set(newItems).size !== newItems.length) { return; }
+        for (const item of newItems) {
+            if (item === "" || !/[a-z0-9]/i.test(item.charAt(0))) { return; }
+        }
+        let id = store.currentList._id;
+        store.changeListName(id, newName);
+        store.changeListItems(id, newItems);
+        store.publishList(id);
         store.closeCurrentList();
     }
 

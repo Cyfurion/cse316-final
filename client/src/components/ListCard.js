@@ -10,7 +10,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
 /**
     This is a card in our list of top 5 lists. It lets select
@@ -38,6 +40,10 @@ function ListCard(props) {
             event.target.value = "";
         }
     }
+    function handleRate(event, type) { 
+        event.stopPropagation();
+        store.rate(listInfo._id, type); 
+    }
 
     async function handleDeleteList(event, id) {
         event.stopPropagation();
@@ -47,28 +53,54 @@ function ListCard(props) {
     let text = "", likes = "", dislikes = "", views = "", comment = "";
     if (listInfo.published) {
         text = <b>Published: <span style={{ color: "green" }}>{listInfo.publishedDate}</span></b>
-        likes = 
-        <IconButton 
-            aria-label='like' 
-            sx={{ 
-                "grid-area": "1 / 1 / 2 / 2", 
-                justifyContent: "left",
-                padding: 0
-            }}
-        >
-            <ThumbUpIcon /><b style={{ marginLeft: "10px" }}>{listInfo.likes.length}</b>
-        </IconButton>;
-        dislikes = 
+        likes = listInfo.likes.includes(auth.user.email) ? 
+            <IconButton 
+                aria-label='like' 
+                sx={{ 
+                    gridArea: "1 / 1 / 2 / 2", 
+                    justifyContent: "left",
+                    padding: 0
+                }}
+                onClick={(event) => handleRate(event, "like")}
+            >
+                <ThumbUpIcon /><b style={{ marginLeft: "10px" }}>{listInfo.likes.length}</b>
+            </IconButton>
+            :
+            <IconButton 
+                aria-label='like' 
+                sx={{ 
+                    gridArea: "1 / 1 / 2 / 2", 
+                    justifyContent: "left",
+                    padding: 0
+                }}
+                onClick={(event) => handleRate(event, "like")}
+            >
+                <ThumbUpOutlinedIcon /><b style={{ marginLeft: "10px" }}>{listInfo.likes.length}</b>
+            </IconButton>
+        dislikes = listInfo.dislikes.includes(auth.user.email) ? 
             <IconButton 
                 aria-label='dislike' 
                 sx={{ 
-                    "grid-area": "1 / 2 / 2 / 3", 
+                    gridArea: "1 / 2 / 2 / 3", 
                     justifyContent: "left", 
                     padding: 0
                 }}
+                onClick={(event) => handleRate(event, "dislike")}
             >
                 <ThumbDownIcon /><b style={{ marginLeft: "10px" }}>{listInfo.dislikes.length}</b>
-            </IconButton>;
+            </IconButton>
+            :
+            <IconButton 
+                aria-label='dislike' 
+                sx={{ 
+                    gridArea: "1 / 2 / 2 / 3", 
+                    justifyContent: "left", 
+                    padding: 0
+                }}
+                onClick={(event) => handleRate(event, "dislike")}
+            >
+                <ThumbDownOutlinedIcon /><b style={{ marginLeft: "10px" }}>{listInfo.dislikes.length}</b>
+            </IconButton>
         views = <b style={{ gridArea: "2 / 1 / 3 / 3" }}>Views: <span style={{ color: "darkred" }}>{listInfo.views}</span></b>;
         comment = 
         <input 
@@ -126,12 +158,12 @@ function ListCard(props) {
                     <IconButton 
                         onClick={(event) => { handleDeleteList(event, listInfo._id) }} 
                         aria-label= 'delete'
-                        sx={{ "grid-area": "1 / 3 / 2 / 4" }}
+                        sx={{ gridArea: "1 / 3 / 2 / 4" }}
                     >
                         <DeleteIcon />
                     </IconButton>
                     {views}
-                    <ExpandMoreIcon sx={{ "grid-area": "2 / 3 / 3 / 4" }} />
+                    <ExpandMoreIcon sx={{ gridArea: "2 / 3 / 3 / 4" }} />
                 </Box>
         </ListItem>
 
@@ -162,7 +194,7 @@ function ListCard(props) {
                     "grid-row-gap": "0px",
                     width: "100%"
                 }}>
-                    <div style={{ "grid-area": "1 / 1 / 2 / 2" }}>
+                    <div style={{ gridArea: "1 / 1 / 2 / 2" }}>
                         <b style={{ fontSize: "20pt" }}>{listInfo.name}</b><br />
                         By: {listInfo.ownerName}
                     </div>
@@ -170,7 +202,7 @@ function ListCard(props) {
                         color: "#d4af37",
                         backgroundColor: "#2c2f70",
                         width: "97%",
-                        "grid-area": "2 / 1 / 3 / 2",
+                        gridArea: "2 / 1 / 3 / 2",
                         borderRadius: "10px",
                         fontSize: "24pt",
                         fontWeight: "bold"
@@ -184,32 +216,32 @@ function ListCard(props) {
                     <div style={{ 
                         display: "flex",
                         alignItems: "center",
-                        "grid-area": "3 / 1 / 4 / 2"
+                        gridArea: "3 / 1 / 4 / 2"
                     }}>
                         {text}
                     </div>
                     <div style={{ 
                         display: "flex",
                         alignItems: "center",
-                        "grid-area": "1 / 3 / 2 / 4"
+                        gridArea: "1 / 3 / 2 / 4"
                     }}>
                         {likes}
                     </div>
                     <div style={{ 
                         display: "flex",
                         alignItems: "center",
-                        "grid-area": "1 / 4 / 2 / 5"
+                        gridArea: "1 / 4 / 2 / 5"
                     }}>
                         {dislikes}
                     </div>
                     <IconButton 
                         onClick={(event) => { handleDeleteList(event, listInfo._id) }} 
                         aria-label= 'delete'
-                        sx={{ "grid-area": "1 / 5 / 2 / 6" }}
+                        sx={{ gridArea: "1 / 5 / 2 / 6" }}
                     >
                         <DeleteIcon />
                     </IconButton>
-                    <Box sx={{ "grid-area": "2 / 2 / 3 / 6" }}>
+                    <Box sx={{ gridArea: "2 / 2 / 3 / 6" }}>
                         <Stack sx={{
                             height: "210px",
                             overflowY: "scroll"
@@ -225,10 +257,11 @@ function ListCard(props) {
                     <div style={{ 
                         display: "flex",
                         alignItems: "center",
-                        "grid-area": "3 / 3 / 4 / 4" 
+                        gridArea: "3 / 3 / 4 / 4" 
                     }}>
                         {views}
                     </div>
+                    <ExpandLessIcon sx={{ gridArea: "3 / 5 / 4 / 6" }} />
                 </Box>
             </ListItem>
     }

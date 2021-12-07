@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 import AppBar from '@mui/material/AppBar';
@@ -17,13 +17,8 @@ export default function AppBanner() {
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
+    const handleProfileMenuOpen = (event) => { setAnchorEl(event.currentTarget); };
+    const handleMenuClose = () => { setAnchorEl(null); };
 
     const handleLogout = () => {
         handleMenuClose();

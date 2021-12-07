@@ -63,6 +63,7 @@ updateTop5List = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     id: top5List._id,
+                    top5List: top5List,
                     message: 'Top 5 List updated!',
                 })
             })
@@ -99,6 +100,8 @@ getTop5ListById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5Lists = async (req, res) => {
+    if (req.query.name) { req.query.name = JSON.parse(req.query.name); }
+    if (req.query.ownerName) { req.query.ownerName = JSON.parse(req.query.ownerName); }
     await Top5List.find(req.query, (err, top5Lists) => {
         if (err) { return res.status(400).json({ success: false, error: err }) }
         return res.status(200).json({ success: true, data: top5Lists })

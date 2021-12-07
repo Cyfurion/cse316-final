@@ -12,7 +12,8 @@ const Top5ListSchema = new Schema(
         likes: { type: [String], required: true },
         dislikes: { type: [String], required: true },
         views: { type: Number, required: true },
-        comments: { type: [{ name: String, body: String }], required: true }
+        comments: { type: [{ name: String, body: String }], required: true },
+        communityPoints: { type: [{ item: String, points: Number }], required: true }
     },
     { timestamps: true },
 )

@@ -1,6 +1,7 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { GlobalStoreContext } from '../store/index.js';
-import { Box, IconButton } from '@mui/material';
+import AuthContext from '../auth';
+import { Box, IconButton, Menu, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Groups';
 import PersonIcon from '@mui/icons-material/Person';
@@ -8,9 +9,42 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import SortIcon from '@mui/icons-material/Sort';
 
 function Toolbar() {
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
 
     function handleChangeView(view) { store.setView(view); }
+    function handleSort(type) { store.sortBy(type); }
+    function handleSearch(event) {
+        if (event.code === "Enter") {
+            if (event.target.value === "") { 
+                store.loadListData();
+            } else {
+                let filter = {};
+                switch (store.view) {
+                    case "home":
+                        filter = { ownerEmail: auth.user.email, name: { $regex: '^' + event.target.value, $options: 'i' } }
+                        break;
+                    case "all":
+                        filter = { published: true, name: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        break;
+                    case "user":
+                        filter = { published: true, ownerName: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        break;
+                    case "community":
+                        filter = { ownerEmail: "community", name: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        break;
+                    default:
+                        return;
+                }
+                store.loadListData(filter);
+            }
+        }
+    }
+
+    const handleMenuOpen = (event) => { setAnchorEl(event.currentTarget); }
+    const handleMenuClose = () => { setAnchorEl(null); }
 
     return (
         <div id="list-selector-heading">
@@ -43,7 +77,12 @@ function Toolbar() {
                 >
                     <FunctionsIcon />
                 </IconButton>
-                <input type="text" id="search-bar" disabled={store.currentList ? true : false} />
+                <input 
+                    type="text" 
+                    id="search-bar" 
+                    disabled={store.currentList ? true : false} 
+                    onKeyPress={handleSearch}
+                />
             </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton
@@ -52,11 +91,33 @@ function Toolbar() {
                     aria-haspopup="true"
                     sx={{ color: 'black' }}
                     disabled={store.currentList ? true : false}
+                    onClick={handleMenuOpen}
                 >
                     <p id="sort-by-text">SORT BY</p>
                     <SortIcon />
                 </IconButton>
             </Box>
+            <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                id="sort-menu"
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={isMenuOpen}
+                onClose={handleMenuClose}
+            >
+                <MenuItem onClick={() => handleSort("new")}>Publish Date (Newest)</MenuItem>
+                <MenuItem onClick={() => handleSort("old")}>Publish Date (Oldest)</MenuItem>
+                <MenuItem onClick={() => handleSort("views")}>Views</MenuItem>
+                <MenuItem onClick={() => handleSort("likes")}>Likes</MenuItem>
+                <MenuItem onClick={() => handleSort("dislikes")}>Dislikes</MenuItem>
+            </Menu>
         </div>
     )
 }
