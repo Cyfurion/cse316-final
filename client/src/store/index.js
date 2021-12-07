@@ -198,6 +198,10 @@ function GlobalStoreContextProvider(props) {
         if (response.data.success) {
             let top5List = response.data.top5List;
             if (auth.user.email !== top5List.ownerEmail) { return; }
+            response = await api.getTop5Lists({ name: top5List.name, ownerEmail: top5List.ownerEmail, published: true });
+            if (response.data.success) {
+                if (response.data.data.length > 0) { return; }
+            }
             top5List.published = true;
             let today = new Date();
             const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -205,10 +209,55 @@ function GlobalStoreContextProvider(props) {
             top5List.publishedDate = monthNames[today.getMonth()] + " " + + today.getDate() + ", " + today.getFullYear();
             async function updateList(top5List) {
                 let response = await api.updateTop5ListById(top5List._id, top5List);
-                if (response.data.success) { store.loadListData(); }
+                if (response.data.success) { 
+                    async function checkCommunity(top5List) {
+                        response = await api.getTop5Lists({ name: top5List.name, ownerName: "Community List" });
+                        if (response.data.success) {
+                            console.log(response.data);
+                            if (response.data.data.length === 0) {
+                                let payload = {
+                                    name: top5List.name,
+                                    items: top5List.items,
+                                    ownerEmail: "community",
+                                    ownerName: "Community List",
+                                    published: true,
+                                    publishedDate: top5List.publishedDate,
+                                    likes: [],
+                                    dislikes: [],
+                                    views: 0,
+                                    comments: [],
+                                    communityPoints: [
+                                        { item: top5List.items[0], points: 5 }, 
+                                        { item: top5List.items[1], points: 4 }, 
+                                        { item: top5List.items[2], points: 3 }, 
+                                        { item: top5List.items[3], points: 2 }, 
+                                        { item: top5List.items[4], points: 1 }
+                                    ]
+                                };
+                                api.createTop5List(payload);
+                            } else {
+                                let communityList = response.data.data[0];
+                                for (let i = 0; i < 5; i++) {
+                                    if (communityList.communityPoints.some(e => e.item === top5List.items[i])) {
+                                        communityList.communityPoints.find(e => e.item === top5List.items[i]).points += 5 - i;
+                                    } else {
+                                        communityList.communityPoints.push({ item: top5List.items[i], points: 5 - i });
+                                    }
+                                }
+                                communityList.communityPoints.sort((a, b) => { return b.points - a.points });
+                                for (let i = 0; i < 5; i++) {
+                                    communityList.items[i] = communityList.communityPoints[i].item;
+                                }
+                                api.updateTop5ListById(communityList._id, communityList);
+                            }
+                            store.loadListData();
+                        }
+                    }
+                    checkCommunity(top5List)
+                }
             }
             updateList(top5List);
-        }  
+        }
     }
     store.comment = async function (user, body) {
         let response = await api.getTop5ListById(store.openedList._id)
@@ -334,9 +383,9 @@ function GlobalStoreContextProvider(props) {
         let newListName = "Untitled" + store.newListCounter;
         let payload = {
             name: newListName,
-            items: [" ", " ", " ", " ", " "],
+            items: ["", "", "", "", ""],
             ownerEmail: auth.user.email,
-            ownerName: auth.user.firstName + " " + auth.user.lastName,
+            ownerName: auth.user.userName,
             published: false,
             publishedDate: "unpublished",
             likes: [],
@@ -368,13 +417,13 @@ function GlobalStoreContextProvider(props) {
                     filter = { ownerEmail: auth.user.email }
                     break;
                 case "all":
-                    filter = { published: true }
+                    filter = { ownerName : { $ne: "Community List" }, published: true }
                     break;
                 case "user":
-                    filter = { published: true }
+                    filter = { ownerName : { $ne: "Community List" }, published: true }
                     break;
                 case "community":
-                    filter = { ownerEmail: "community" }
+                    filter = { ownerName: "Community List" }
                     break;
                 default:
                     return;
@@ -461,13 +510,13 @@ function GlobalStoreContextProvider(props) {
                                     filter = { ownerEmail: auth.user.email }
                                     break;
                                 case "all":
-                                    filter = { published: true }
+                                    filter = { ownerName : { $ne: "Community List" }, published: true }
                                     break;
                                 case "user":
-                                    filter = { published: true }
+                                    filter = { ownerName : { $ne: "Community List" }, published: true }
                                     break;
                                 case "community":
-                                    filter = { ownerEmail: "community" }
+                                    filter = { ownerName: "Community List" }
                                     break;
                                 default:
                                     return;
@@ -509,13 +558,13 @@ function GlobalStoreContextProvider(props) {
                 filter = { ownerEmail: auth.user.email }
                 break;
             case "all":
-                filter = { published: true }
+                filter = { ownerName : { $ne: "Community List" }, published: true }
                 break;
             case "user":
-                filter = { published: true }
+                filter = { ownerName : { $ne: "Community List" }, published: true }
                 break;
             case "community":
-                filter = { ownerEmail: "community" }
+                filter = { ownerName: "Community List" }
                 break;
             default:
                 return;

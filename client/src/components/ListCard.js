@@ -36,7 +36,7 @@ function ListCard(props) {
 
     function handleComment(event) {
         if (event.code === "Enter") {
-            store.comment(auth.user.email, event.target.value);
+            store.comment(auth.user.userName, event.target.value);
             event.target.value = "";
         }
     }
@@ -108,7 +108,8 @@ function ListCard(props) {
                 width: "98.5%", 
                 height: "10%", 
                 marginTop: "2.5%",
-                borderRadius: "8px"
+                borderRadius: "8px",
+                fontSize: "12pt"
             }} 
             type="text" 
             placeholder="Add Comment"
@@ -207,11 +208,21 @@ function ListCard(props) {
                         fontSize: "24pt",
                         fontWeight: "bold"
                     }}>
-                        <ListItem>1. {listInfo.items[0]}</ListItem>
-                        <ListItem>2. {listInfo.items[1]}</ListItem>
-                        <ListItem>3. {listInfo.items[2]}</ListItem>
-                        <ListItem>4. {listInfo.items[3]}</ListItem>
-                        <ListItem>5. {listInfo.items[4]}</ListItem>
+                        <ListItem>
+                            1. {listInfo.ownerEmail === "community" ? listInfo.items[0] + " (" + listInfo.communityPoints[0].points + " Points)" : listInfo.items[0]}
+                        </ListItem>
+                        <ListItem>
+                            2. {listInfo.ownerEmail === "community" ? listInfo.items[1] + " (" + listInfo.communityPoints[1].points + " Points)" : listInfo.items[1]}
+                        </ListItem>
+                        <ListItem>
+                            3. {listInfo.ownerEmail === "community" ? listInfo.items[2] + " (" + listInfo.communityPoints[2].points + " Points)" : listInfo.items[2]}
+                        </ListItem>
+                        <ListItem>
+                            4. {listInfo.ownerEmail === "community" ? listInfo.items[3] + " (" + listInfo.communityPoints[3].points + " Points)" : listInfo.items[3]}
+                        </ListItem>
+                        <ListItem>
+                            5. {listInfo.ownerEmail === "community" ? listInfo.items[4] + " (" + listInfo.communityPoints[4].points + " Points)" : listInfo.items[4]}
+                        </ListItem>
                     </Stack>
                     <div style={{ 
                         display: "flex",

@@ -24,16 +24,23 @@ function Toolbar() {
                 let filter = {};
                 switch (store.view) {
                     case "home":
-                        filter = { ownerEmail: auth.user.email, name: { $regex: '^' + event.target.value, $options: 'i' } }
+                        filter = { name: { $regex: '^' + event.target.value, $options: 'i' }, ownerEmail: auth.user.email }
                         break;
                     case "all":
-                        filter = { published: true, name: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        filter = { 
+                            name: { $regex: '^' + event.target.value + '$', $options: 'i' }, 
+                            ownerName : { $ne: "Community List" },
+                            published: true 
+                        }
                         break;
                     case "user":
-                        filter = { published: true, ownerName: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        filter = { 
+                            ownerName: { $regex: '^' + event.target.value + '$', $options: 'i', $ne: "Community List" }, 
+                            published: true 
+                        }
                         break;
                     case "community":
-                        filter = { ownerEmail: "community", name: { $regex: '^' + event.target.value + '$', $options: 'i' } }
+                        filter = { name: { $regex: '^' + event.target.value + '$', $options: 'i' }, ownerName: "Community List" }
                         break;
                     default:
                         return;

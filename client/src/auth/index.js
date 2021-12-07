@@ -19,8 +19,7 @@ function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
         loggedIn: false,
-        errorMsg: "",
-        initials: ""
+        errorMsg: ""
     });
     const history = useHistory();
 
@@ -35,48 +34,42 @@ function AuthContextProvider(props) {
                 return setAuth({
                     user: payload.user,
                     loggedIn: payload.loggedIn,
-                    errorMsg: auth.errorMsg,
-                    initials: auth.initials
+                    errorMsg: auth.errorMsg
                 });
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
-                    errorMsg: "",
-                    initials: payload.user.firstName.charAt(0) + payload.user.lastName.charAt(0)
+                    errorMsg: ""
                 })
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
-                    errorMsg: "",
-                    initials: payload.user.firstName.charAt(0) + payload.user.lastName.charAt(0)
+                    errorMsg: ""
                 })
             }
             case AuthActionType.LOGOUT_USER: {
                 return setAuth({
                     user: null,
                     loggedIn: false,
-                    errorMsg: "",
-                    initials: ""
+                    errorMsg: ""
                 })
             }
             case AuthActionType.SHOW_ERROR: {
                 return setAuth({
                     user: null,
                     loggedIn: false,
-                    errorMsg: payload,
-                    initials: auth.initials
+                    errorMsg: payload
                 })
             }
             case AuthActionType.HIDE_ERROR: {
                 return setAuth({
                     user: null,
                     loggedIn: false,
-                    errorMsg: "",
-                    initials: auth.initials
+                    errorMsg: ""
                 })
             }
             default:
@@ -108,7 +101,6 @@ function AuthContextProvider(props) {
                 }
             })
             history.push("/");
-            store.loadListData({ ownerEmail: auth.user.email });
         }
     }
 
@@ -148,9 +140,7 @@ function AuthContextProvider(props) {
     }
 
     return (
-        <AuthContext.Provider value={{
-            auth
-        }}>
+        <AuthContext.Provider value={{ auth }}>
             {props.children}
         </AuthContext.Provider>
     );

@@ -8,8 +8,7 @@ getLoggedIn = async (req, res) => {
         return res.status(200).json({
             loggedIn: true,
             user: {
-                firstName: loggedInUser.firstName,
-                lastName: loggedInUser.lastName,
+                userName: loggedInUser.userName,
                 email: loggedInUser.email
             }
         }).send();
@@ -18,8 +17,8 @@ getLoggedIn = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, passwordVerify } = req.body;
-        if (!firstName || !lastName || !email || !password || !passwordVerify) {
+        const { userName, email, password, passwordVerify } = req.body;
+        if (!userName || !email || !password || !passwordVerify) {
             return res
                 .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
@@ -34,7 +33,7 @@ registerUser = async (req, res) => {
                 .status(400)
                 .json({ errorMessage: "Please enter the same password twice." })
         }
-        const existingUser = await User.findOne({ email: email });
+        let existingUser = await User.findOne({ email: email });
         if (existingUser) {
             return res
                 .status(400)
@@ -43,14 +42,21 @@ registerUser = async (req, res) => {
                     errorMessage: "An account with this email address already exists."
                 })
         }
+        existingUser = await User.findOne({ userName: userName });
+        if (existingUser) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    errorMessage: "An account with this username already exists."
+                })
+        }
 
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        const newUser = new User({
-            firstName, lastName, email, passwordHash
-        });
+        const newUser = new User({ userName, email, passwordHash });
         const savedUser = await newUser.save();
 
         // LOGIN THE USER
@@ -63,8 +69,7 @@ registerUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
-                firstName: savedUser.firstName,
-                lastName: savedUser.lastName,
+                userName: savedUser.userName,
                 email: savedUser.email
             }
         }).send();
@@ -111,8 +116,7 @@ loginUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
-                firstName: existingUser.firstName,
-                lastName: existingUser.lastName,
+                userName: existingUser.userName,
                 email: existingUser.email
             }
         }).send();

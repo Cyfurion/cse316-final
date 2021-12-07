@@ -41,7 +41,6 @@ updateTop5List = async (req, res) => {
         })
     }
     Top5List.findOne({ _id: req.params.id }, (err, top5List) => {
-        console.log("top5List found: " + JSON.stringify(top5List));
         if (err) {
             return res.status(404).json({
                 err,
@@ -56,10 +55,10 @@ updateTop5List = async (req, res) => {
         top5List.dislikes = body.dislikes;
         top5List.views = body.views;
         top5List.comments = body.comments;
+        top5List.communityPoints = body.communityPoints;
         top5List
             .save()
             .then(() => {
-                console.log("SUCCESS!!!");
                 return res.status(200).json({
                     success: true,
                     id: top5List._id,
@@ -100,8 +99,8 @@ getTop5ListById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getTop5Lists = async (req, res) => {
-    if (req.query.name) { req.query.name = JSON.parse(req.query.name); }
-    if (req.query.ownerName) { req.query.ownerName = JSON.parse(req.query.ownerName); }
+    if (req.query.name && req.query.name.charAt(0) === '{') { req.query.name = JSON.parse(req.query.name); }
+    if (req.query.ownerName && req.query.ownerName.charAt(0) === '{') { req.query.ownerName = JSON.parse(req.query.ownerName); }
     await Top5List.find(req.query, (err, top5Lists) => {
         if (err) { return res.status(400).json({ success: false, error: err }) }
         return res.status(200).json({ success: true, data: top5Lists })
